@@ -1,8 +1,8 @@
 # Example for usage
 
 # .github/workflows/create-signature.yml
-
-name: "Create Signature"
+```
+name: "Create Signature on Package"
 
 on:
   push:
@@ -27,3 +27,4 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+```
