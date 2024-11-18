@@ -2,7 +2,7 @@
 
 name: "Create Signature for Package"
 description: "Creates a signature JSON and calls the jf evd create command."
-
+author: "lesnerd"
 inputs:
   package-name:
     description: "The name of the package."
@@ -10,15 +10,17 @@ inputs:
   package-repo-name:
     description: "The repository name of the package."
     required: true
+  private-key:
+    description: "The private key to sign the DSSE."
+    required: true
 
 runs:
   using: "composite"
   steps:
-    - run: ./entrypoint.sh
+    - run: |
+        chmod +x ./.github/actions/create-signature/entrypoint.sh
+        ./.github/actions/create-signature/entrypoint.sh ${{ inputs.package-name }} ${{ inputs.package-repo-name }} ${{ inputs.private-key }}
       shell: bash
-      with:
-        args: ${{ inputs.package-name }} ${{ inputs.package-repo-name }}
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         RUN_NUMBER: ${{ github.run_number }}
-        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
